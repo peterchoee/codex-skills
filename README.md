@@ -16,40 +16,57 @@ agent workflows can be reused across local projects.
 
 ## Install
 
-Add this repository as a Codex plugin marketplace:
+### First-time install from GitHub
+
+Add this repository as a Codex plugin marketplace, then install the Android
+plugin from that marketplace:
 
 ```bash
 codex plugin marketplace add peterchoee/codex-skills
-```
-
-Then install the plugin you want from that marketplace:
-
-```bash
 codex plugin add build-android-apps@codex-skills
 ```
 
-Verify that the plugin is installed and enabled:
+Open a new Codex session after installing so Codex loads the bundled skill.
+
+### Update an existing install
+
+If you already installed `build-android-apps@codex-skills`, refresh the GitHub
+marketplace snapshot and reinstall the plugin so Codex uses the newest cached
+version:
+
+```bash
+codex plugin marketplace upgrade codex-skills
+codex plugin remove build-android-apps@codex-skills
+codex plugin add build-android-apps@codex-skills
+```
+
+Open a new Codex session after reinstalling. Existing sessions can keep the
+previous plugin skill list in memory.
+
+### Verify installation
+
+Check that the plugin is installed, enabled, and using the expected version:
 
 ```bash
 codex plugin list | rg -C 2 'build-android-apps@codex-skills'
 ```
 
-The status should show `installed, enabled`.
+The status should show `installed, enabled`. For this repository revision,
+`build-android-apps` should install as version `0.1.1` or newer.
 
-For local development from a checked-out copy, add the local repository as the
-marketplace root instead:
+You can also verify that a fresh Codex session sees the bundled skill:
 
 ```bash
-codex plugin marketplace add /absolute/path/to/codex-skills
-codex plugin add build-android-apps@codex-skills
+codex -C /path/to/your/android/project debug prompt-input 'Reply OK' \
+  | rg 'build-android-apps:android-emulator-browser'
 ```
 
-After installation, restart Codex or open a new session so the bundled skill is
-loaded.
+### Use the installed skill
 
 In the Codex app, type `/` and choose `Android Emulator Browser` from the
-slash command list. Codex includes enabled skills in that list. You can also
-invoke the skill directly in the composer:
+slash command list. Codex includes enabled skills in that list.
+
+You can also invoke the skill directly in the composer:
 
 ```text
 $android-emulator-browser
@@ -62,13 +79,19 @@ with their plugin namespace:
 build-android-apps:android-emulator-browser
 ```
 
-To update an existing install from GitHub:
+### Local development install
+
+For local development from a checked-out copy, add the local repository as the
+marketplace root instead:
 
 ```bash
-codex plugin marketplace upgrade codex-skills
-codex plugin remove build-android-apps@codex-skills
+codex plugin marketplace add /absolute/path/to/codex-skills
 codex plugin add build-android-apps@codex-skills
 ```
+
+For local development, reinstall after plugin changes and then open a new Codex
+session. If the local marketplace was already added, run `codex plugin add
+build-android-apps@codex-skills` again after changing the plugin.
 
 ## Repository Layout
 
