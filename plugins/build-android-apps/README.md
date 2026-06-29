@@ -33,25 +33,52 @@ to be visible inside Codex.
 
 ## Install
 
-Add the parent repository as a Codex plugin marketplace:
+### First-time install from GitHub
+
+Add the parent repository as a Codex plugin marketplace, then install this
+plugin from that marketplace:
 
 ```bash
 codex plugin marketplace add peterchoee/codex-skills
-```
-
-Then install this plugin from that marketplace:
-
-```bash
 codex plugin add build-android-apps@codex-skills
 ```
 
-Verify that it is installed and enabled:
+Open a new Codex session after installing so Codex loads
+`android-emulator-browser`.
+
+### Update an existing install
+
+If this plugin is already installed, refresh the GitHub marketplace snapshot
+and reinstall the plugin:
+
+```bash
+codex plugin marketplace upgrade codex-skills
+codex plugin remove build-android-apps@codex-skills
+codex plugin add build-android-apps@codex-skills
+```
+
+Open a new Codex session after reinstalling. Existing sessions can keep the
+previous plugin skill list in memory.
+
+### Verify installation
+
+Check that the plugin is installed, enabled, and using the expected version:
 
 ```bash
 codex plugin list | rg -C 2 'build-android-apps@codex-skills'
 ```
 
-The status should show `installed, enabled`.
+The status should show `installed, enabled`. For this repository revision,
+`build-android-apps` should install as version `0.1.1` or newer.
+
+You can also verify that a fresh Codex session sees the bundled skill:
+
+```bash
+codex -C /path/to/your/android/project debug prompt-input 'Reply OK' \
+  | rg 'build-android-apps:android-emulator-browser'
+```
+
+### Local development install
 
 For local development from a checked-out copy of the parent repository:
 
@@ -60,8 +87,9 @@ codex plugin marketplace add /absolute/path/to/codex-skills
 codex plugin add build-android-apps@codex-skills
 ```
 
-After installation, restart Codex or open a new session so the bundled skill is
-loaded.
+For local development, reinstall after plugin changes and then open a new Codex
+session. If the local marketplace was already added, run `codex plugin add
+build-android-apps@codex-skills` again after changing the plugin.
 
 ## Usage
 
@@ -93,14 +121,6 @@ with their plugin namespace:
 
 ```text
 build-android-apps:android-emulator-browser
-```
-
-To update an existing install from GitHub:
-
-```bash
-codex plugin marketplace upgrade codex-skills
-codex plugin remove build-android-apps@codex-skills
-codex plugin add build-android-apps@codex-skills
 ```
 
 ## Requirements
