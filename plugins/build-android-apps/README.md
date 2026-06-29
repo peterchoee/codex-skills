@@ -7,6 +7,8 @@ adb-connected Android emulators or devices. It is designed for sessions where a
 real Android screen, runtime logs, accessibility state, or visual proof needs
 to be visible inside Codex.
 
+![Android Emulator Browser running in Codex](./assets/screenshots/android-emulator-browser.png)
+
 ## Included Skill
 
 | Type | Name | Path | Purpose |
