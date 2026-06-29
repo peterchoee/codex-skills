@@ -10,9 +10,7 @@ agent workflows can be reused across local projects.
 
 | Type | Name | Path | Description |
 | --- | --- | --- | --- |
-| Marketplace | `codex-skills` | `.agents/plugins/marketplace.json` | Repo marketplace manifest that exposes plugins from this checkout. |
-| Plugin | `build-android-apps` | `plugins/build-android-apps/` | Android app development plugin for device mirroring, automation, previews, and debugging. |
-| Skill / slash entry | `android-emulator-browser` | `plugins/build-android-apps/skills/android-emulator-browser/` | Bundled skill that appears in the Codex slash command list and mirrors adb-connected Android devices from Codex. |
+| Plugin | [`build-android-apps`](https://github.com/peterchoee/codex-skills/blob/main/plugins/build-android-apps/README.md) | `plugins/build-android-apps/` | Android app development plugin for device mirroring, automation, previews, and debugging. |
 
 ## Install
 
@@ -113,15 +111,6 @@ build-android-apps@codex-skills` again after changing the plugin.
 |               `-- scripts/
 `-- README.md
 ```
-
-## Plugin Details
-
-Each plugin owns its own README. Start here for plugin-specific usage,
-requirements, scripts, and skill behavior:
-
-| Plugin | README |
-| --- | --- |
-| `build-android-apps` | `plugins/build-android-apps/README.md` |
 
 ## Maintenance
 
