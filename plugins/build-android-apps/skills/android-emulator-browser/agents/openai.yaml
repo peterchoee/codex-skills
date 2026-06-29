@@ -1,0 +1,4 @@
+interface:
+  display_name: "Android Emulator Browser"
+  short_description: "Show, automate, debug, and preview Android apps."
+  default_prompt: "Use $android-emulator-browser to open an Android app in the Codex browser panel, then inspect, automate, debug, or preview it."

@@ -1,0 +1,37 @@
+{
+  "name": "build-android-apps",
+  "version": "0.1.0",
+  "description": "Build Android apps with workflows for emulator and device mirroring in the Codex in-app browser, selector automation, previews, and runtime debugging.",
+  "author": {
+    "name": "Peter"
+  },
+  "license": "MIT",
+  "keywords": [
+    "android",
+    "adb",
+    "emulator",
+    "react-native",
+    "expo",
+    "compose",
+    "xml",
+    "debugging",
+    "previews"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Build Android Apps",
+    "shortDescription": "Mirror, inspect, automate, preview, and debug Android apps from Codex.",
+    "longDescription": "Use Build Android Apps to open adb-connected Android emulators or devices in the Codex in-app browser, automate visible UI through screenshots and accessibility selectors, inspect activity and logcat state, capture proof bundles, and launch React Native, Expo, Jetpack Compose, or Android XML preview hosts.",
+    "developerName": "Peter",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Mirror and debug an Android app in the Codex browser."
+    ],
+    "brandColor": "#3DDC84"
+  }
+}
