@@ -12,7 +12,8 @@ to be visible inside Codex.
 | Type | Name | Path | Purpose |
 | --- | --- | --- | --- |
 | Plugin manifest | `build-android-apps` | `.codex-plugin/plugin.json` | Declares the installable Codex plugin and points Codex at bundled skills. |
-| Skill | `android-emulator-browser` | `skills/android-emulator-browser/` | Mirrors Android screens into the Codex in-app browser and provides automation, preview, debug, and proof workflows. |
+| Skill / slash entry | `android-emulator-browser` | `skills/android-emulator-browser/` | Mirrors Android screens into the Codex in-app browser and appears in the Codex slash command list. |
+| Skill UI metadata | `Android Emulator Browser` | `skills/android-emulator-browser/agents/openai.yaml` | Provides the Codex app display name, short description, and default `$android-emulator-browser` prompt. |
 | Skill instructions | `android-emulator-browser` | `skills/android-emulator-browser/SKILL.md` | Defines when the skill should activate and how Codex should operate safely. |
 | Scripts | `android-emulator-browser` | `skills/android-emulator-browser/scripts/` | Node helpers for browser mirroring, Android preview launch, device inspection, screenshots, and proof bundles. |
 | Workflow docs | `android-emulator-browser` | `skills/android-emulator-browser/references/` | Supporting workflow notes for Android, previews, proof capture, browser handoff, automation, and debugging. |
@@ -32,26 +33,50 @@ to be visible inside Codex.
 
 ## Install
 
-Install this plugin from the parent marketplace:
+Add the parent repository as a Codex plugin marketplace:
 
 ```bash
 codex plugin marketplace add peterchoee/codex-skills
 ```
 
-Then open `/plugins` in Codex, choose the `Codex Skills` marketplace, and
-install `Build Android Apps`.
+Then install this plugin from that marketplace:
+
+```bash
+codex plugin add build-android-apps@codex-skills
+```
+
+Verify that it is installed and enabled:
+
+```bash
+codex plugin list | rg -C 2 'build-android-apps@codex-skills'
+```
+
+The status should show `installed, enabled`.
 
 For local development from a checked-out copy of the parent repository:
 
 ```bash
 codex plugin marketplace add /absolute/path/to/codex-skills
+codex plugin add build-android-apps@codex-skills
 ```
+
+After installation, restart Codex or open a new session so the bundled skill is
+loaded.
 
 ## Usage
 
 After installation, Codex can trigger the bundled skill when a task involves an
 Android emulator, connected device, app preview, runtime debugging, UI
 automation, or visual proof collection.
+
+In the Codex app, type `/` and choose `Android Emulator Browser` from the
+slash command list. Codex includes enabled skills in that list.
+
+Direct skill invocation:
+
+```text
+$android-emulator-browser
+```
 
 Example prompts:
 
@@ -63,10 +88,19 @@ Mirror this Android emulator in the Codex browser and help me debug the current 
 Open the Expo preview on my connected Android device and capture proof after the flow works.
 ```
 
-Plugin-installed skills are namespaced by their plugin:
+In debug output or generated skill lists, plugin-installed skills may appear
+with their plugin namespace:
 
 ```text
 build-android-apps:android-emulator-browser
+```
+
+To update an existing install from GitHub:
+
+```bash
+codex plugin marketplace upgrade codex-skills
+codex plugin remove build-android-apps@codex-skills
+codex plugin add build-android-apps@codex-skills
 ```
 
 ## Requirements

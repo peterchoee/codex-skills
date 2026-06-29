@@ -1,6 +1,6 @@
 {
   "name": "build-android-apps",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Build Android apps with workflows for emulator and device mirroring in the Codex in-app browser, selector automation, previews, and runtime debugging.",
   "author": {
     "name": "Peter"

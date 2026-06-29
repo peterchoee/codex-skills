@@ -12,7 +12,7 @@ agent workflows can be reused across local projects.
 | --- | --- | --- | --- |
 | Marketplace | `codex-skills` | `.agents/plugins/marketplace.json` | Repo marketplace manifest that exposes plugins from this checkout. |
 | Plugin | `build-android-apps` | `plugins/build-android-apps/` | Android app development plugin for device mirroring, automation, previews, and debugging. |
-| Skill | `android-emulator-browser` | `plugins/build-android-apps/skills/android-emulator-browser/` | Bundled skill used by `build-android-apps` to mirror and control adb-connected Android devices from Codex. |
+| Skill / slash entry | `android-emulator-browser` | `plugins/build-android-apps/skills/android-emulator-browser/` | Bundled skill that appears in the Codex slash command list and mirrors adb-connected Android devices from Codex. |
 
 ## Install
 
@@ -22,14 +22,53 @@ Add this repository as a Codex plugin marketplace:
 codex plugin marketplace add peterchoee/codex-skills
 ```
 
-For local development from a checked-out copy:
+Then install the plugin you want from that marketplace:
+
+```bash
+codex plugin add build-android-apps@codex-skills
+```
+
+Verify that the plugin is installed and enabled:
+
+```bash
+codex plugin list | rg -C 2 'build-android-apps@codex-skills'
+```
+
+The status should show `installed, enabled`.
+
+For local development from a checked-out copy, add the local repository as the
+marketplace root instead:
 
 ```bash
 codex plugin marketplace add /absolute/path/to/codex-skills
+codex plugin add build-android-apps@codex-skills
 ```
 
-Then open `/plugins` in Codex, choose the `Codex Skills` marketplace, and
-install the plugin you want.
+After installation, restart Codex or open a new session so the bundled skill is
+loaded.
+
+In the Codex app, type `/` and choose `Android Emulator Browser` from the
+slash command list. Codex includes enabled skills in that list. You can also
+invoke the skill directly in the composer:
+
+```text
+$android-emulator-browser
+```
+
+In debug output or generated skill lists, plugin-installed skills may appear
+with their plugin namespace:
+
+```text
+build-android-apps:android-emulator-browser
+```
+
+To update an existing install from GitHub:
+
+```bash
+codex plugin marketplace upgrade codex-skills
+codex plugin remove build-android-apps@codex-skills
+codex plugin add build-android-apps@codex-skills
+```
 
 ## Repository Layout
 
@@ -65,15 +104,18 @@ requirements, scripts, and skill behavior:
 
 Each plugin lives under `plugins/<plugin-name>/` and includes a required
 `.codex-plugin/plugin.json` manifest. Bundled skills live under that plugin's
-`skills/` directory, with one `SKILL.md` per skill.
+`skills/` directory, with one `SKILL.md` per skill. Skill UI metadata for the
+Codex app lives in `skills/<skill-name>/agents/openai.yaml`.
 
 When adding a plugin:
 
 1. Create `plugins/<plugin-name>/.codex-plugin/plugin.json`.
 2. Add bundled skills under `plugins/<plugin-name>/skills/<skill-name>/`.
-3. Add or update the plugin entry in `.agents/plugins/marketplace.json`.
-4. Add `plugins/<plugin-name>/README.md` for plugin-specific documentation.
-5. Restart Codex and verify the plugin appears in the `Codex Skills`
+3. Add `agents/openai.yaml` inside each skill that should have a friendly
+   Codex app slash-list label and default prompt.
+4. Add or update the plugin entry in `.agents/plugins/marketplace.json`.
+5. Add `plugins/<plugin-name>/README.md` for plugin-specific documentation.
+6. Restart Codex and verify the plugin appears in the `Codex Skills`
    marketplace.
 
 When adding a skill to an existing plugin:
